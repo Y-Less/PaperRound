@@ -1,7 +1,7 @@
 # PaperRound
 Program to generate multi-monitor wallpapers
 
-![PaperRound screenshot](https://raw.githubusercontent.com/Y-Less/PaperRound/da2dbf986fe4a04d218a2edebf3ff5e9f7ab55a8/PaperRound.png)
+![PaperRound screenshot](https://raw.githubusercontent.com/Y-Less/PaperRound/73b6a2856fd589f9848608276960bec3d2d5ac2d/PaperRound.png)
 
 This is a simple program to stitch several images together to form a single large image suitable for use as a tiled wallpaper in multi-monitor setups.  The program shows a visual representation of your monitor layout (shown by the four images in the screenshot above).  Each of these monitors can have a wallpaper assigned with the "..." button.  The image can be dragged about, or zoomed in and out with the "+" and "-" buttons (faster zooming is done with the "++" and "--" buttons).
 
