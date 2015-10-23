@@ -9,3 +9,4 @@ The "Save" and "Save As" buttons save the layout independent of monitor arrangem
 
 The "Export" button saves the current arrangement as a `.png` file.  This correctly handles wrapping and tiling - if your primary monitor is not the top-left monitor, the resulting wallpaper may appear sliced oddly to wrap around correctly, but (should) render correctly on the desktop.
 
+The PaperRound/bin/Release directory has a compiled version of the program, but feel free to build your own.
