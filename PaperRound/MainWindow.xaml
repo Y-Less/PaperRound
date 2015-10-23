@@ -1,0 +1,116 @@
+﻿<Window x:Class="MultiWallpaper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        MouseUp="OnMouseUp"
+        Title="PaperRound" Height="768" Width="1024" WindowState="Maximized" SizeChanged="Window_SizeChanged">
+    <Window.Resources>
+        <Style x:Key="ScreenButton" TargetType="{x:Type Button}">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Width" Value="25" />
+            <Setter Property="Height" Value="25" />
+        </Style>
+        <Style x:Key="ZoomInIn" BasedOn="{StaticResource ScreenButton}" TargetType="{x:Type Button}">
+            <EventSetter Event="PreviewMouseDown" Handler="OnZoomInIn" />
+            <EventSetter Event="PreviewMouseUp" Handler="OnMouseUp" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="Black" BorderThickness="2">
+                            <Label Padding="0" Content="++" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ZoomIn" BasedOn="{StaticResource ScreenButton}" TargetType="{x:Type Button}">
+            <EventSetter Event="PreviewMouseDown" Handler="OnZoomIn" />
+            <EventSetter Event="PreviewMouseUp" Handler="OnMouseUp" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="Black" BorderThickness="2">
+                            <Label Padding="0" Content="+" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ZoomOut" BasedOn="{StaticResource ScreenButton}" TargetType="{x:Type Button}">
+            <EventSetter Event="PreviewMouseDown" Handler="OnZoomOut" />
+            <EventSetter Event="PreviewMouseUp" Handler="OnMouseUp" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="Black" BorderThickness="2">
+                            <Label Padding="0" Content="─" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ZoomOutOut" BasedOn="{StaticResource ScreenButton}" TargetType="{x:Type Button}">
+            <EventSetter Event="PreviewMouseDown" Handler="OnZoomOutOut" />
+            <EventSetter Event="PreviewMouseUp" Handler="OnMouseUp" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="Black" BorderThickness="2">
+                            <Label Padding="0" Content="─ ─" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SelectFile" BasedOn="{StaticResource ScreenButton}" TargetType="{x:Type Button}">
+            <EventSetter Event="Click" Handler="OnSelect" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="Black" BorderThickness="2">
+                            <Label Padding="0" Content="..." Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ScreenControl" TargetType="{x:Type Button}">
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="4" />
+            <Setter Property="Cursor" Value="ScrollAll" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid ClipToBounds="True">
+                            <Image PreviewMouseDown="StartDrag" PreviewMouseMove="Drag" PreviewMouseUp="OnMouseUp" Margin="{Binding Path=Content.Margin, RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding Path=Content.Src, RelativeSource={RelativeSource TemplatedParent}}" Width="{Binding Path=Content.Width, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding Path=Content.Height, RelativeSource={RelativeSource TemplatedParent}}"></Image>
+                            <Rectangle Margin="0,0,0,0" Cursor="ScrollAll" Fill="{x:Null}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}"></Rectangle>
+                            <Button Style="{StaticResource ZoomInIn}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,10,0,0"></Button>
+                            <Button Style="{StaticResource ZoomIn}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,40,0,0"></Button>
+                            <Button Style="{StaticResource ZoomOut}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,70,0,0"></Button>
+                            <Button Style="{StaticResource ZoomOutOut}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,100,0,0"></Button>
+                            <Button Style="{StaticResource SelectFile}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,130,0,0"></Button>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Name="Grid_Main">
+        <Canvas Name="Canvas_Main" Margin="0,150,0,0">
+        </Canvas>
+        <Rectangle VerticalAlignment="Top" Height="150" Fill="LightGray" Stroke="Black"></Rectangle>
+        <Button Content="New" Height="50" HorizontalAlignment="Center" Margin="0,50,600,0" Name="Button_New" Click="ClickNew" VerticalAlignment="Top" Width="100" />
+        <Button Content="Load" Height="50" HorizontalAlignment="Center" Margin="0,50,300,0" Name="Button_Loadw" Click="ClickLoad" VerticalAlignment="Top" Width="100" />
+        <Button Content="Save" Height="50" HorizontalAlignment="Center" Margin="0,50,0,0" Name="Button_Save" Click="ClickSave" VerticalAlignment="Top" Width="100" />
+        <Button Content="Save As" Height="50" HorizontalAlignment="Center" Margin="300,50,0,0" Name="Button_SaveAs" Click="ClickSaveAs" VerticalAlignment="Top" Width="100" />
+        <Button Content="Export" Height="50" HorizontalAlignment="Center" Margin="600,50,0,0" Name="Button_Export" Click="ClickExport" VerticalAlignment="Top" Width="100" />
+        <!--<Button Style="{StaticResource ScreenControl}" VerticalAlignment="Top" Margin="0,25,0,0" Width="100" Height="100" Content="/MultiWallpaper;component/Images/blender1.png"></Button>-->
+    </Grid>
+</Window>
+
