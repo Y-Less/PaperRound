@@ -201,24 +201,24 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid ClipToBounds="True">
-                            <Image PreviewMouseDown="OnStartDrag" PreviewMouseMove="OnDrag" PreviewMouseUp="OnMouseUp" Margin="{Binding Path=Content.Margin, RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding Path=Content.Src, RelativeSource={RelativeSource TemplatedParent}}" Width="{Binding Path=Content.Width, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding Path=Content.Height, RelativeSource={RelativeSource TemplatedParent}}"></Image>
+                            <Image ToolTip="Drag the image about to reposition it." PreviewMouseDown="OnStartDrag" PreviewMouseMove="OnDrag" PreviewMouseUp="OnMouseUp" Margin="{Binding Path=Content.Margin, RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding Path=Content.Src, RelativeSource={RelativeSource TemplatedParent}}" Width="{Binding Path=Content.Width, RelativeSource={RelativeSource TemplatedParent}}" Height="{Binding Path=Content.Height, RelativeSource={RelativeSource TemplatedParent}}"></Image>
                             <Rectangle Margin="0,0,0,0" Cursor="Arrow" Fill="{x:Null}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}"></Rectangle>
-                            <Button Style="{StaticResource ZoomInIn}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,10,0,0"></Button>
-                            <Button Style="{StaticResource ZoomIn}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,40,0,0"></Button>
-                            <Button Style="{StaticResource ZoomOut}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,70,0,0"></Button>
-                            <Button Style="{StaticResource ZoomOutOut}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,100,0,0"></Button>
-                            <Button Style="{StaticResource SelectFile}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,130,0,0"></Button>
-                            <Button Style="{StaticResource More}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,170,0,0"></Button>
+                            <Button ToolTip="Zoom this image in (fast)." Style="{StaticResource ZoomInIn}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,10,0,0"></Button>
+                            <Button ToolTip="Zoom this image in (slow)." Style="{StaticResource ZoomIn}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,40,0,0"></Button>
+                            <Button ToolTip="Zoom this image in (slow)." Style="{StaticResource ZoomOut}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,70,0,0"></Button>
+                            <Button ToolTip="Zoom this image in (fast)." Style="{StaticResource ZoomOutOut}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,100,0,0"></Button>
+                            <Button ToolTip="Select an image for this moitor." Style="{StaticResource SelectFile}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,130,0,0"></Button>
+                            <Button ToolTip="Show more image controls." Style="{StaticResource More}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="10,170,0,0"></Button>
                             <Rectangle Cursor="Arrow" Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Fill="Transparent" Margin="-90,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="425" Height="245" MouseEnter="OnMouseOffExtras" />
                             <Rectangle Cursor="Arrow" Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Fill="Transparent" Margin="0,150,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="245" Height="65" />
                             <Rectangle Cursor="Arrow" Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Stroke="Black" StrokeThickness="2" Margin="10,160,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Fill="White" Width="225" Height="45" />
-                            <Button Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapLeft}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="20,170,0,0"></Button>
-                            <Button Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapTop}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="50,170,0,0"></Button>
-                            <Button Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapRight}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="80,170,0,0"></Button>
-                            <Button Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapBottom}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="110,170,0,0"></Button>
-                            <Button Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapWidth}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="140,170,0,0"></Button>
-                            <Button Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapHeight}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="170,170,0,0"></Button>
-                            <Button Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource Reset}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="200,170,0,0"></Button>
+                            <Button ToolTip="Dock this image to the left of this monitor." Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapLeft}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="20,170,0,0"></Button>
+                            <Button ToolTip="Dock this image to the top of this monitor." Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapTop}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="50,170,0,0"></Button>
+                            <Button ToolTip="Dock this image to the right of this monitor." Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapRight}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="80,170,0,0"></Button>
+                            <Button ToolTip="Dock this image to the bottom of this monitor." Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapBottom}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="110,170,0,0"></Button>
+                            <Button ToolTip="Fit this image to this monitor's width." Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapWidth}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="140,170,0,0"></Button>
+                            <Button ToolTip="Fit this image to this monitor's height." Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource SnapHeight}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="170,170,0,0"></Button>
+                            <Button ToolTip="Reset image size and location." Visibility="{Binding Path=Content.ExtrasEnabled, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource Reset}" Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" Margin="200,170,0,0"></Button>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -226,14 +226,13 @@
         </Style>
     </Window.Resources>
     <Grid Name="Grid_Main">
-        <Canvas Name="Canvas_Main" Margin="0,80,0,0">
-        </Canvas>
         <Rectangle VerticalAlignment="Top" Height="80" Fill="LightGray" Stroke="Black"></Rectangle>
-        <Button Content="New" Height="40" HorizontalAlignment="Center" Margin="0,20,600,0" Name="Button_New" Click="OnClickNew" VerticalAlignment="Top" Width="100" />
-        <Button Content="Load" Height="40" HorizontalAlignment="Center" Margin="0,20,300,0" Name="Button_Loadw" Click="OnClickLoad" VerticalAlignment="Top" Width="100" />
-        <Button Content="Save" Height="40" HorizontalAlignment="Center" Margin="0,20,0,0" Name="Button_Save" Click="OnClickSave" VerticalAlignment="Top" Width="100" />
-        <Button Content="Save As" Height="40" HorizontalAlignment="Center" Margin="300,20,0,0" Name="Button_SaveAs" Click="OnClickSaveAs" VerticalAlignment="Top" Width="100" />
-        <Button Content="Export" Height="40" HorizontalAlignment="Center" Margin="600,20,0,0" Name="Button_Export" Click="OnClickExport" VerticalAlignment="Top" Width="100" />
+        <Button ToolTip="Create a new wallpaper." Content="New" Height="40" HorizontalAlignment="Center" Margin="0,20,600,0" Name="Button_New" Click="OnClickNew" VerticalAlignment="Top" Width="100" />
+        <Button ToolTip="Load an existing wallpaper file." Content="Load" Height="40" HorizontalAlignment="Center" Margin="0,20,300,0" Name="Button_Loadw" Click="OnClickLoad" VerticalAlignment="Top" Width="100" />
+        <Button ToolTip="Save the current wallpaper." Content="Save" Height="40" HorizontalAlignment="Center" Margin="0,20,0,0" Name="Button_Save" Click="OnClickSave" VerticalAlignment="Top" Width="100" />
+        <Button ToolTip="Save the current wallpaper in a new file." Content="Save As" Height="40" HorizontalAlignment="Center" Margin="300,20,0,0" Name="Button_SaveAs" Click="OnClickSaveAs" VerticalAlignment="Top" Width="100" />
+        <Button ToolTip="Generate a .png image from the current wallpaper." Content="Export" Height="40" HorizontalAlignment="Center" Margin="600,20,0,0" Name="Button_Export" Click="OnClickExport" VerticalAlignment="Top" Width="100" />
+        <Canvas Name="Canvas_Main" Margin="0,80,0,0" />
     </Grid>
 </Window>
 
