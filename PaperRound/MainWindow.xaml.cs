@@ -35,9 +35,10 @@ namespace MultiWallpaper
 			X_ = 0;
 			Y_ = 0;
 			H_ = 0;
-			originalH_ = 0;
+			originalHeight = 0;
 			Src_ = null;
 			Scale_ = 1.0;
+			ShowExtras = false;
 		}
 
 		public System.Xml.Schema.XmlSchema GetSchema()
@@ -65,7 +66,8 @@ namespace MultiWallpaper
 		private double X_;
 		private double Y_;
 		private double H_;
-		private double originalH_;
+		[XmlIgnore]
+		public double originalHeight { get; private set; }
 		private double Scale_;
 		private string Src_;
 
@@ -75,6 +77,27 @@ namespace MultiWallpaper
 		public double Y { get { return Y_; } set { Y_ = value; Notify("Margin"); } }
 		public double W { get { return H_ * Ratio; } }
 		public double H { get { return H_; } set { H_ = value; Notify("Width"); Notify("Height"); } }
+
+		[XmlIgnore]
+		public Visibility ExtrasEnabled { get; private set; }
+
+		[XmlIgnore]
+		public bool ShowExtras
+		{
+			get
+			{
+				return ExtrasEnabled == Visibility.Visible;
+			}
+
+			set
+			{
+				if (value)
+					ExtrasEnabled = Visibility.Visible;
+				else
+					ExtrasEnabled = Visibility.Collapsed;
+				Notify("ExtrasEnabled");
+			}
+		}
 
 		[XmlIgnore]
 		public double Ratio { get; private set; }
@@ -107,7 +130,7 @@ namespace MultiWallpaper
 		{
 			get
 			{
-				return H_ / originalH_;
+				return H_ / originalHeight;
 			}
 		}
 
@@ -128,7 +151,7 @@ namespace MultiWallpaper
 				{
 					System.Drawing.Image
 						image = System.Drawing.Image.FromFile(Src_);
-					originalH_ = H_ = image.Height;
+					originalHeight = H_ = image.Height;
 					X_ = 0;
 					Y_ = 0;
 					Ratio = image.Width / H_;
@@ -353,12 +376,12 @@ namespace MultiWallpaper
 			((sender as Button).Content as Wallpaper).Src = (fileDialog.ShowDialog() == true) ? fileDialog.FileName : null;
 		}
 
-		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+		private void OnWindow_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			RenderAllScreens();
 		}
 
-		private void StartDrag(object sender, RoutedEventArgs e)
+		private void OnStartDrag(object sender, RoutedEventArgs e)
 		{
 			dragging_ = (sender as Image).TemplatedParent as Button;
 			Wallpaper
@@ -368,7 +391,16 @@ namespace MultiWallpaper
 			e.Handled = true;
 		}
 
-		private void Drag(object sender, MouseEventArgs e)
+		private void OnMouseOffExtras(object sender, MouseEventArgs e)
+		{
+			//MessageBox.Show("gone");
+			foreach (var w in wallpapers_.Values)
+			{
+				w.ShowExtras = false;
+			}
+		}
+
+		private void OnDrag(object sender, MouseEventArgs e)
 		{
 			if (dragging_ != null && sender as Image != null && dragging_ == (sender as Image).TemplatedParent as Button)
 			{
@@ -386,7 +418,12 @@ namespace MultiWallpaper
 			}
 		}
 
-		private void ClickNew(object sender, RoutedEventArgs e)
+		private void OnClickMore(object sender, RoutedEventArgs e)
+		{
+			((sender as Button).Content as Wallpaper).ShowExtras = true;
+		}
+
+		private void OnClickNew(object sender, RoutedEventArgs e)
 		{
 			if (MessageBox.Show("Are you sure you want to discard changes?", "New Image", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 			{
@@ -395,15 +432,15 @@ namespace MultiWallpaper
 			}
 		}
 
-		private void ClickSave(object sender, RoutedEventArgs e)
+		private void OnClickSave(object sender, RoutedEventArgs e)
 		{
 			if (filename_ == "")
-				ClickSaveAs(sender, e);
+				OnClickSaveAs(sender, e);
 			else
 				Save(filename_);
 		}
 
-		private void ClickSaveAs(object sender, RoutedEventArgs e)
+		private void OnClickSaveAs(object sender, RoutedEventArgs e)
 		{
 			SaveFileDialog
 				fileDialog = new SaveFileDialog();
@@ -417,7 +454,7 @@ namespace MultiWallpaper
 			}
 		}
 
-		private void ClickLoad(object sender, RoutedEventArgs e)
+		private void OnClickLoad(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog
 				fileDialog = new OpenFileDialog();
@@ -427,7 +464,7 @@ namespace MultiWallpaper
 				Load(fileDialog.FileName);
 		}
 
-		private void ClickExport(object sender, RoutedEventArgs e)
+		private void OnClickExport(object sender, RoutedEventArgs e)
 		{
 			SaveFileDialog
 				fileDialog = new SaveFileDialog();
@@ -547,6 +584,86 @@ namespace MultiWallpaper
 				}
 				b.Save(fname, D.Imaging.ImageFormat.Png);
 			}
+		}
+
+		private void OnSnapLeft(object sender, RoutedEventArgs e)
+		{
+			Wallpaper
+				w = (sender as Button).Content as Wallpaper;
+			w.X = 0;
+		}
+
+		private void OnSnapTop(object sender, RoutedEventArgs e)
+		{
+			Wallpaper
+				w = (sender as Button).Content as Wallpaper;
+			w.Y = 0;
+		}
+
+		private void OnSnapRight(object sender, RoutedEventArgs e)
+		{
+			Wallpaper
+				w = (sender as Button).Content as Wallpaper;
+			foreach (var s in wallpapers_)
+			{
+				if ((object)s.Value == (object)w)
+				{
+					w.X = s.Key.Bounds.Width - w.W;
+					break;
+				}
+			}
+		}
+
+		private void OnSnapBottom(object sender, RoutedEventArgs e)
+		{
+			Wallpaper
+				w = (sender as Button).Content as Wallpaper;
+			foreach (var s in wallpapers_)
+			{
+				if ((object)s.Value == (object)w)
+				{
+					w.Y = s.Key.Bounds.Height - w.H;
+					break;
+				}
+			}
+		}
+
+		private void OnSnapWidth(object sender, RoutedEventArgs e)
+		{
+			Wallpaper
+				w = (sender as Button).Content as Wallpaper;
+			foreach (var s in wallpapers_)
+			{
+				if ((object)s.Value == (object)w)
+				{
+					// We only ever modify height to preserve ratios.
+					w.H = s.Key.Bounds.Width / w.Ratio;
+					break;
+				}
+			}
+		}
+
+		private void OnSnapHeight(object sender, RoutedEventArgs e)
+		{
+			Wallpaper
+				w = (sender as Button).Content as Wallpaper;
+			foreach (var s in wallpapers_)
+			{
+				if ((object)s.Value == (object)w)
+				{
+					w.H = s.Key.Bounds.Height;
+					break;
+				}
+			}
+		}
+
+		private void OnClickReset(object sender, RoutedEventArgs e)
+		{
+			Wallpaper
+				w = (sender as Button).Content as Wallpaper;
+			w.H = w.originalHeight;
+			w.X = 0;
+			w.Y = 0;
 		}
 	}
 }
